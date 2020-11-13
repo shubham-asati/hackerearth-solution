@@ -1,0 +1,50 @@
+/*
+  BEFORE jumping into code :
+  this can be solved by considering the equation g(x) = ax^2 + by^2 where x+y=n 
+   => ax^2 + b(n-x)^2
+   => (a+b)(x-b*n/(a+b))^2 + c
+   
+   the val of (b*n/(a+b)) is closest to x than the value of whose equation can be minimum
+  
+*/
+
+// Write your code here
+
+package main
+
+import(
+    "fmt"
+    "bufio"
+    "os"
+)
+
+var reader *bufio.Reader = bufio.NewReader(os.Stdin)
+
+func scanf(f string,args ...interface{}){fmt.Fscanf(reader,f,args...)}
+
+func min(a,b int)int{
+    if a < b{
+        return a
+    }
+    return b
+}
+
+func main(){
+    var t int
+    scanf("%d\n",&t)
+    for t > 0 {
+        var n,a,b int
+       scanf("%d %d %d\n",&n,&a,&b)
+        if a==0 || b==0{
+            fmt.Println(0)
+            t--
+            continue
+        }
+         x := (n*b)/(a+b)
+         xx := x+1
+         ans := a*x*x + b*(n-x)*(n-x)
+         ans1 := a*xx*xx + b*(n-xx)*(n-xx)
+        fmt.Println(min(ans,ans1))
+        t--
+    }
+}
