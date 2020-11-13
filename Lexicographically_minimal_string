@@ -1,0 +1,51 @@
+/*
+BEFORE jumping into the code :- 
+ go through this article https://www.hackerearth.com/practice/data-structures/disjoint-data-strutures/basics-of-disjoint-data-structures/tutorial/
+ 
+ the idea here is to create a disjoint set . the array size is 26 and create a set where root element will be the smallest character of the set.
+   union will combine two sets and make the smallest character of two set as root
+*/
+
+// Write your code here
+
+package main
+
+import(
+    "fmt"
+)
+
+func root(a int,arr []int)int{
+    i := a
+    for i != arr[i]{
+        i=arr[arr[i]]
+    }
+    return i
+}
+func union(a,b int,arr []int){
+    rootA := root(a,arr)
+    rootB := root(b,arr)
+    if arr[rootA] < arr[rootB] {
+      arr[rootB]=arr[rootA]
+    }else{
+        arr[rootA]=arr[rootB]
+    }
+}
+
+func main(){
+    var a,b,c string
+    fmt.Scanf("%s\n%s\n%s\n",&a,&b,&c)
+    arr := make([]int,26)
+    for i:=0;i<26;i++{
+        arr[i]=i
+    }
+    for i:=0;i<len(a);i++{
+        union(int(a[i]-97),int(b[i]-97),arr)
+    }
+    //fmt.Println(arr)
+    ans := ""
+    for i:=0;i<len(c);i++{
+      rootC :=   root(int(c[i]-97),arr)
+      ans += string(rootC+97)
+    }
+    fmt.Println(ans)
+}
