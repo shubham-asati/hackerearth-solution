@@ -1,0 +1,51 @@
+/*
+BEFORE jumping in the code :- 
+ take a pen paper and find out when the d(i,j) = d(i,1)-d(j,1) condition will be true...
+ this wont be happening to all the vertices. 
+ 
+ ...hmm....
+ now the solution is to know how many child nodes are there for a given node
+ the ans would be to calculate all the child nodes for a given node and add it to the ans. 
+*/
+
+// Write your code here
+
+package main
+import(
+    "fmt"
+)
+var tree map[int][]int
+func buildTree(currentNode int,nodes map[int][]int,visited []bool)int{
+    if visited[currentNode]{
+        return -1
+    }
+    visited[currentNode]=true
+    noOfChildNode := 0
+    for _,childNode := range nodes[currentNode]{
+        tree[currentNode]=append(tree[currentNode],childNode)
+        noOfChildNode++
+        noOfChildNode += buildTree(childNode,nodes,visited)
+    }
+    tree[currentNode]=append(tree[currentNode],noOfChildNode)
+    return noOfChildNode
+}
+func main(){
+    var n int
+    fmt.Scanf("%d\n",&n)
+    nodes:= make(map[int][]int,0)
+    for i:=0;i<n;i++ {
+        var a,b int
+        fmt.Scanf("%d %d\n",&a,&b)
+        nodes[a]=append(nodes[a],b)
+        nodes[b]=append(nodes[b],a)
+    }
+    
+    tree = make(map[int][]int,0)
+    buildTree(1,nodes,make([]bool,n+1))
+    ;
+    ans := 0
+    for _,val := range tree{
+        ans+=val[len(val)-1]
+    }
+    fmt.Println(ans+n)
+}
